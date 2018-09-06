@@ -1,9 +1,10 @@
-package init
+package initialize
 
 import (
 	"difffile/internal/common"
 	"encoding/json"
 	"os"
+	"strings"
 )
 
 // 默认保存的md5文件
@@ -33,9 +34,10 @@ func (i *Init) Exec() error {
 	)
 	// md5文件
 	for i := range files {
-		if files[i] == DefaultWriteFileName {
+		if strings.HasSuffix(files[i], DefaultWriteFileName) {
 			continue
 		}
+
 		m, err = common.FileMD5(files[i])
 		if err != nil {
 			return err

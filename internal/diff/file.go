@@ -2,7 +2,7 @@ package diff
 
 import (
 	"difffile/internal/common"
-	"difffile/internal/init"
+	"difffile/internal/initialize"
 	"encoding/json"
 	"io/ioutil"
 	"os"
@@ -20,8 +20,9 @@ func NewDiff(readPath string, fileSuffix ...string) *Diff {
 func (d *Diff) Diff() ([]string, error) {
 	var fileNotExist bool
 	// 读取原文件
-	fileData, err := ioutil.ReadFile(d.readPath + common.PathSep + init.DefaultWriteFileName)
+	fileData, err := ioutil.ReadFile(d.readPath + common.PathSep + initialize.DefaultWriteFileName)
 	switch err {
+	case nil:
 	case os.ErrNotExist:
 		fileNotExist = true
 	default:
@@ -29,7 +30,7 @@ func (d *Diff) Diff() ([]string, error) {
 	}
 
 	oldDataMap := make(map[string]string)
-	if fileNotExist {
+	if !fileNotExist {
 		// 序列化
 		if err = json.Unmarshal(fileData, &oldDataMap); err != nil {
 			return nil, err
@@ -49,7 +50,7 @@ func (d *Diff) Diff() ([]string, error) {
 		ok         bool
 	)
 	for i := range files {
-		if files[i] == init.DefaultWriteFileName {
+		if files[i] == initialize.DefaultWriteFileName {
 			continue
 		}
 		newM, err = common.FileMD5(files[i])
