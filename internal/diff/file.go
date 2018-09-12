@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 type Diff struct {
@@ -50,7 +51,7 @@ func (d *Diff) Diff() ([]string, error) {
 		ok         bool
 	)
 	for i := range files {
-		if files[i] == initialize.DefaultWriteFileName {
+		if strings.HasSuffix(files[i], initialize.DefaultWriteFileName) {
 			continue
 		}
 		newM, err = common.FileMD5(files[i])
