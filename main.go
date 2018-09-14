@@ -65,12 +65,14 @@ func main() {
 			}
 		}
 
-		i := initialize.NewInit(*srcPath, *srcPath, suffixs...)
-		if err := i.Exec(); err != nil {
-			fmt.Println("difffile init exec fail", err)
-			return
-		}
-		fmt.Println("difffile init success!!!")
+		/*
+			i := initialize.NewInit(*srcPath, *srcPath, suffixs...)
+			if err := i.Exec(); err != nil {
+				fmt.Println("difffile init exec fail", err)
+				return
+			}
+			fmt.Println("difffile init success!!!")
+		*/
 	default:
 		fmt.Println("invalid run type", *mode)
 	}
